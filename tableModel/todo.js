@@ -6,11 +6,11 @@ module.exports = (sequelize, Sequelize) => {
       validate: {
         len: [1, 250],
       },
-      completed: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
+    },
+    completed: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
   });
 };
