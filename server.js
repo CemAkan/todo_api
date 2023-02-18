@@ -4,6 +4,12 @@ require("dotenv").config();
 
 var PORT = process.env.PORT;
 
-app.listen(PORT, () => {
-  console.log("Working on port: " + PORT);
+// --> Data Base Connection <--
+var dataBase = require("./connect.js");
+
+// --> Open a Port <--
+dataBase.sequelize.sync().then(() => {
+  app.listen(PORT, () => {
+    console.log("Working on port: " + PORT);
+  });
 });
