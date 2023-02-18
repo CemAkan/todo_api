@@ -14,7 +14,7 @@ const sequelize = new Sequelize(DB, NAME, PASSWORD, {
 
 var dataBase = {};
 
-dataBase.Todo = sequelize.import(__dirname + "/models/todo.js");
+dataBase.Todo = sequelize.import(__dirname + "/tableModel/todo.js");
 dataBase.sequelize = sequelize;
 dataBase.Sequelize = Sequelize;
 
