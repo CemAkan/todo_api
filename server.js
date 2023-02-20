@@ -32,7 +32,7 @@ app.get("/todo", (req, res) => {
 app.post("/todo", (req, res) => {
   let body = _.pick(req.body, "description", "completed");
   dataBase.Todo.create(body).then((todo) => {
-    res.json(todo.toJson());
+    res.json(todo);
   }),
     () => {
       res.status(500).send();
@@ -41,7 +41,43 @@ app.post("/todo", (req, res) => {
 
 // --> put request <--
 app.put("/todo/:id", (req, res) => {
-  res.send("Udating todo elements.");
+  let todoId = req.params.id;
+  let body = _.pick(req.body, "description", "completed");
+  let attributes = {};
+
+  if (body.hasOwnProperty("description")) {
+    attributes.description = body.description;
+  }
+
+  if (body.hasOwnProperty("completed")) {
+    attributes.completed = body.completed;
+  }
+
+  dataBase.Todo.findOne({
+    where: {
+      id: todoId,
+    },
+  }).then(
+    (todo) => {
+      if (todo) {
+        todo.update(attributes).then(
+          (todo) => {
+            res.json(todo);
+          },
+          () => {
+            res.status(400).send();
+          }
+        );
+      } else {
+        res.status(404).send({
+          error: "Todo id can not found.",
+        });
+      }
+    },
+    () => {
+      res.status(500).send();
+    }
+  );
 });
 
 // --> delete request <--
