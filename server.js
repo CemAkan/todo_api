@@ -34,8 +34,8 @@ app.post("/todo", (req, res) => {
   dataBase.Todo.create(body).then((todo) => {
     res.json(todo.toJson());
   }),
-    (err) => {
-      res.json(err.toJson());
+    () => {
+      res.status(500).send();
     };
 });
 
