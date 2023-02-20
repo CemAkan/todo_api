@@ -81,6 +81,24 @@ app.put("/todo/:id", (req, res) => {
 });
 
 // --> delete request <--
-app.delete("/todo", (req, res) => {
-  res.send("Deleting todo elements.");
+app.delete("/todo/:id", (req, res) => {
+  let todoId = req.params.id;
+  dataBase.Todo.destroy({
+    where: {
+      id: todoId,
+    },
+  }).then(
+    (rowdeleted) => {
+      if (rowdeleted === 0) {
+        res.status(404).send({
+          error: "Todo element can not found.",
+        });
+      } else {
+        res.status(204).send();
+      }
+    },
+    () => {
+      res.status(500).send();
+    }
+  );
 });
