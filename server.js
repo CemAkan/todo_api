@@ -19,7 +19,13 @@ dataBase.sequelize.sync().then(() => {
 
 // --> get request <--
 app.get("/todo", (req, res) => {
-  res.send("List all todo elements.");
+  dataBase.Todo.findAll({
+    where: {
+      completed: false,
+    },
+  }).then((todos) => {
+    res.json(todos);
+  });
 });
 
 // --> post request <--
