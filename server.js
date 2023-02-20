@@ -1,5 +1,8 @@
 var express = require("express");
 var app = express();
+var bodyParser = require("body-parser");
+app.use(bodyParser.json());
+var _ = require("underscore");
 require("dotenv").config();
 
 var PORT = process.env.PORT;
@@ -21,7 +24,7 @@ app.get("/todo", (req, res) => {
 
 // --> post request <--
 app.post("/todo", (req, res) => {
-  res.send("Adding todo elements.");
+  let body = _.pick(req.body, "description", "completed");
 });
 
 // --> put request <--
