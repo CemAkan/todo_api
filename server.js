@@ -25,6 +25,12 @@ app.get("/todo", (req, res) => {
 // --> post request <--
 app.post("/todo", (req, res) => {
   let body = _.pick(req.body, "description", "completed");
+  dataBase.Todo.create(body).then((todo) => {
+    res.json(todo.toJson());
+  }),
+    (err) => {
+      res.json(err.toJson());
+    };
 });
 
 // --> put request <--
